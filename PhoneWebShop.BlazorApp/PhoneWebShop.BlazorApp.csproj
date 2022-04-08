@@ -8,4 +8,11 @@
     <Folder Include="Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Blazorise" Version="0.9.5.7" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.7" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.7" />
+  </ItemGroup>
+
+	
 </Project>
