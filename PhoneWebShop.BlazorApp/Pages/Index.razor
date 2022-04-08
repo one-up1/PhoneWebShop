@@ -1,7 +1,66 @@
-﻿@page "/"
+﻿@using PhoneWebShop.Domain.Entities;
 
-<h1>Hello, world!</h1>
+@page "/"
 
-Welcome to your new app.
+<h3>This webshop has @phones.Count phones!</h3>
+<br />
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<ListGroup>
+    @foreach (Phone phone in phones)
+    {
+        <ListGroupItem>@phone.FullName</ListGroupItem>
+    }
+</ListGroup>
+
+@code {
+    private List<Phone> phones;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Brand samsung = new Brand()
+        {
+            Name = "Samsung"
+        };
+
+        Brand huawei = new Brand()
+        {
+            Name = "Huawei"
+        };
+
+        phones = new List<Phone>()
+        {
+            new()
+            {
+                Brand = samsung,
+                Type = "Galaxy A51"
+            },
+            new()
+            {
+                Brand = samsung,
+                Type = "Galaxy A22"
+            },
+            new()
+            {
+                Brand = samsung,
+                Type = "Galaxy A03"
+            },
+            new()
+            {
+                Brand = huawei,
+                Type = "P50"
+            },
+            new()
+            {
+                Brand = huawei,
+                Type = "P51"
+            },
+            new()
+            {
+                Brand = huawei,
+                Type = "P52"
+            }
+        };
+    }
+}

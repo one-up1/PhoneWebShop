@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneWebShop.Api", "PhoneWe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ScraperTool.ConsoleApp", "ScraperTool.ConsoleApp\ScraperTool.ConsoleApp.csproj", "{C72CBAAF-AFAF-44C1-8476-506B0401E4C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhoneWebShop.BlazorApp", "PhoneWebShop.BlazorApp\PhoneWebShop.BlazorApp.csproj", "{0D67CF85-04B7-4F58-B36E-F20CAB0D8EEA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PhoneWebShop.BlazorApp", "PhoneWebShop.BlazorApp\PhoneWebShop.BlazorApp.csproj", "{0D67CF85-04B7-4F58-B36E-F20CAB0D8EEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
