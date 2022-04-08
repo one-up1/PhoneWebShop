@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ImportTool.ConsoleApp": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\thoma\\Downloads\\PhoneList001.xml\""
+    }
+  }
+}

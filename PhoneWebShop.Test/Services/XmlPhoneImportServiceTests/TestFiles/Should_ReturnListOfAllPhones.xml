@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Phones>
+  <Phone>
+    <Brand>Brand Test123</Brand>
+    <Type>Type Test123</Type>
+    <Price>1234</Price>
+    <Description>Description Test123</Description>
+    <Stock>999</Stock>
+  </Phone>
+  <Phone>
+    <Brand>Brandzzzz</Brand>
+    <Type>Typezzzz</Type>
+    <Price>1234</Price>
+    <Description>Descriptionzzzzzz</Description>
+    <Stock>9001</Stock> <!-- It's over 9000! -->
+  </Phone>
+</Phones>
