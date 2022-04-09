@@ -2,13 +2,10 @@
 
 @page "/"
 
-<h3>This webshop has @phones.Count phones!</h3>
-<br />
-
 <ListGroup>
     @foreach (Phone phone in phones)
     {
-        <ListGroupItem>@phone.FullName</ListGroupItem>
+        <PhoneInfo Phone="@phone" />
     }
 </ListGroup>
 
@@ -21,11 +18,13 @@
 
         Brand samsung = new()
         {
+            Id = 1,
             Name = "Samsung"
         };
 
         Brand huawei = new()
         {
+            Id = 2,
             Name = "Huawei"
         };
 
@@ -34,32 +33,44 @@
             new()
             {
                 Brand = samsung,
-                Type = "Galaxy A51"
+                Type = "Galaxy A51",
+                VATPrice = 200,
+                Stock = 9
             },
             new()
             {
                 Brand = samsung,
-                Type = "Galaxy A22"
+                Type = "Galaxy A22",
+                VATPrice = 201,
+                Stock = 8
             },
             new()
             {
                 Brand = samsung,
-                Type = "Galaxy A03"
+                Type = "Galaxy A03",
+                VATPrice = 202,
+                Stock = 7
             },
             new()
             {
                 Brand = huawei,
-                Type = "P50"
+                Type = "P50",
+                VATPrice = 100,
+                Stock = 5
             },
             new()
             {
                 Brand = huawei,
-                Type = "P51"
+                Type = "P51",
+                VATPrice = 101,
+                Stock = 4
             },
             new()
             {
                 Brand = huawei,
-                Type = "P52"
+                Type = "P52",
+                VATPrice = 102,
+                Stock = 3
             }
         };
     }

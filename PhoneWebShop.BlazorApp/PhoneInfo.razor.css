@@ -1,0 +1,76 @@
+﻿.phone {
+    width: 425px;
+    padding: 5px;
+
+    border: 1px solid black;
+}
+
+.phone-image {
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+
+    border: 1px solid black;
+}
+
+/*https://stackoverflow.com/questions/18920542/draw-an-x-in-css*/
+.phone-image-x {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    /*
+        De stelling van Pythagoras :D
+        Anders wordt de X niet net zo breed als het vierkant,
+        omdat deze 45° gedraaid is en de schuine zijde van een driehoek langer is
+    */
+    transform: scale(1.414213562, 1.414213562);
+}
+
+.phone-image-x::before,
+.phone-image-x::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 1px; /* cross thickness */
+    background-color: black;
+}
+
+.phone-image-x::before {
+    transform: rotate(45deg);
+}
+
+.phone-image-x::after {
+    transform: rotate(-45deg);
+}
+
+.phone-info {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+
+    width: 300px;
+    height: 100px;
+    margin-left: 5px;
+}
+
+.phone-name {
+    font-weight: bold;
+}
+
+.phone-button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    width: 128px;
+    height: 32px;
+
+    border: 1px solid black;
+    border-radius: 8px;
+
+    text-align: center;
+}

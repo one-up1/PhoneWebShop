@@ -1,0 +1,17 @@
+﻿@using PhoneWebShop.Domain.Entities;
+
+<ListGroupItem>
+    <div class="phone">
+        <div class="phone-image"><div class="phone-image-x" /></div>
+        <div class="phone-info">
+            <h4 class="phone-name">@Phone.FullName</h4>
+            &euro;@Phone.VATPrice  @Phone.Stock left in stock!
+            <div class="phone-button">Show more</div>
+        </div>
+    </div>
+</ListGroupItem>
+
+@code {
+    [Parameter]
+    public Phone Phone { get; set; }
+}
