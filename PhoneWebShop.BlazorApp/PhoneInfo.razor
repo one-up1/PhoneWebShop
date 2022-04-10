@@ -1,4 +1,5 @@
 ﻿@using PhoneWebShop.Domain.Entities;
+@inject IJSRuntime JsRuntime
 
 <ListGroupItem>
     <div class="phone">
@@ -6,7 +7,7 @@
         <div class="phone-info">
             <h4 class="phone-name">@Phone.FullName</h4>
             &euro;@Phone.VATPrice  @Phone.Stock left in stock!
-            <div class="phone-button">Show more</div>
+            <button class="btn btn-primary phone-button" @onclick="ShowDescription">Show more</button>
         </div>
     </div>
 </ListGroupItem>
@@ -14,4 +15,12 @@
 @code {
     [Parameter]
     public Phone Phone { get; set; }
+
+    private void ShowDescription()
+    {
+        if (Phone.Description != null)
+        {
+            JsRuntime.InvokeVoidAsync("alert", Phone.Description);
+        }
+    }
 }

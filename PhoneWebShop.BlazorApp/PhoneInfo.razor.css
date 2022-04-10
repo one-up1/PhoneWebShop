@@ -65,12 +65,4 @@
     position: absolute;
     bottom: 0;
     right: 0;
-
-    width: 128px;
-    height: 32px;
-
-    border: 1px solid black;
-    border-radius: 8px;
-
-    text-align: center;
 }
