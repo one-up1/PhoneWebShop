@@ -1,20 +1,20 @@
 ﻿@using PhoneWebShop.Domain.Entities;
 @inject IJSRuntime JsRuntime
 
-<ListGroupItem>
-    <div class="phone">
-        <div class="phone-image"><div class="phone-image-x" /></div>
-        <div class="phone-info">
-            <h4 class="phone-name">@Phone.FullName</h4>
-            &euro;@Phone.VATPrice  @Phone.Stock left in stock!
-            <button class="btn btn-primary phone-button" @onclick="ShowDescription">Show more</button>
-        </div>
+<ListGroupItem Style="width: 420px; margin: 5px;" Border="Border.Is1.Dark">
+    <div class="phone-image"><div class="phone-image-x" /></div>
+    <div class="phone-info">
+        <h4 class="phone-name">@Phone.FullName</h4>
+        &euro;@Phone.VATPrice  @Phone.Stock left in stock!
     </div>
+    <button class="btn btn-primary phone-button" @onclick="ShowDescription">Show more</button>
 </ListGroupItem>
 
 @code {
     [Parameter]
     public Phone Phone { get; set; }
+
+    const string phoneStyle = "width: 425px; padding: 5px; border: 1px solid black;";
 
     private void ShowDescription()
     {

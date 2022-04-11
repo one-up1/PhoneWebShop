@@ -1,11 +1,4 @@
-﻿.phone {
-    width: 425px;
-    padding: 5px;
-
-    border: 1px solid black;
-}
-
-.phone-image {
+﻿.phone-image {
     display: inline-block;
     width: 100px;
     height: 100px;
@@ -52,8 +45,6 @@
     position: relative;
     vertical-align: top;
 
-    width: 300px;
-    height: 100px;
     margin-left: 5px;
 }
 
@@ -63,6 +54,6 @@
 
 .phone-button {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 16px;
+    right: 16px;
 }
