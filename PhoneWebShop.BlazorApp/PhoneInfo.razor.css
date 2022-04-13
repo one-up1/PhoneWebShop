@@ -1,4 +1,9 @@
-﻿.phone-image {
+﻿::deep .phone {
+    width: 420px;
+    margin: 5px;
+}
+
+.phone-image {
     display: inline-block;
     width: 100px;
     height: 100px;
@@ -46,4 +51,12 @@
 
 .phone-name {
     font-weight: bold;
+}
+
+::deep .phone-button {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    margin: 5px;
+    border: 1px solid black;
 }
