@@ -1,4 +1,5 @@
 ﻿@using PhoneWebShop.Domain.Entities;
+@using PhoneWebShop.Domain.Interfaces;
 
 @page "/"
 
@@ -10,13 +11,18 @@
 </ListGroup>
 
 @code {
-    private List<Phone> phones;
+    [Inject]
+    IPhoneService PhoneService { get; set; }
+
+    private IEnumerable<Phone> phones;
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
-        Brand samsung = new()
+        phones = PhoneService.GetAll().Result;
+
+        /*Brand samsung = new()
         {
             Id = 1,
             Name = "Samsung"
@@ -74,6 +80,6 @@
                 VATPrice = 102,
                 Stock = 3
             }
-        };
+        };*/
     }
 }

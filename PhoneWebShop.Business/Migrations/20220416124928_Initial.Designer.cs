@@ -10,15 +10,15 @@ using PhoneWebShop.Business;
 namespace PhoneWebShop.Business.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220223130538_Orders")]
-    partial class Orders
+    [Migration("20220416124928_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.13")
+                .HasAnnotation("ProductVersion", "5.0.16")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -217,21 +217,6 @@ namespace PhoneWebShop.Business.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("OrderPhone", b =>
-                {
-                    b.Property<int>("OrdersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductsPerOrderId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrdersId", "ProductsPerOrderId");
-
-                    b.HasIndex("ProductsPerOrderId");
-
-                    b.ToTable("OrderPhone");
-                });
-
             modelBuilder.Entity("PhoneWebShop.Domain.Entities.Brand", b =>
                 {
                     b.Property<int>("Id")
@@ -287,11 +272,14 @@ namespace PhoneWebShop.Business.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                    b.Property<string>("CustomerId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Deleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Reason")
                         .HasColumnType("int");
@@ -371,6 +359,31 @@ namespace PhoneWebShop.Business.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PhoneWebShop.Domain.Entities.ProductOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductOrder");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -422,21 +435,6 @@ namespace PhoneWebShop.Business.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OrderPhone", b =>
-                {
-                    b.HasOne("PhoneWebShop.Domain.Entities.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PhoneWebShop.Domain.Entities.Phone", null)
-                        .WithMany()
-                        .HasForeignKey("ProductsPerOrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("PhoneWebShop.Domain.Entities.Phone", b =>
                 {
                     b.HasOne("PhoneWebShop.Domain.Entities.Brand", "Brand")
@@ -446,6 +444,26 @@ namespace PhoneWebShop.Business.Migrations
                         .IsRequired();
 
                     b.Navigation("Brand");
+                });
+
+            modelBuilder.Entity("PhoneWebShop.Domain.Entities.ProductOrder", b =>
+                {
+                    b.HasOne("PhoneWebShop.Domain.Entities.Order", null)
+                        .WithMany("ProductsPerOrder")
+                        .HasForeignKey("OrderId");
+
+                    b.HasOne("PhoneWebShop.Domain.Entities.Phone", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("PhoneWebShop.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("ProductsPerOrder");
                 });
 #pragma warning restore 612, 618
         }

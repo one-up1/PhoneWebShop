@@ -2,9 +2,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PhoneWebShop.Business;
+using PhoneWebShop.Business.Diagnostics;
+using PhoneWebShop.Business.Services;
+using PhoneWebShop.Domain.Interfaces;
+using PhoneWebShop.Domain.Models.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +34,20 @@ namespace PhoneWebShop.BlazorApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             //services.AddSingleton<WeatherForecastService>();
+
+            services.AddDbContext<DataContext>(/*x =>
+                x.UseSqlServer(Configuration["AppSettings:ConnectionString"]), ServiceLifetime.Scoped*/);
+            services.Configure<AppSettings>(options =>
+            {
+                options.ConnectionString = Configuration["AppSettings:ConnectionString"];
+            });
+
+            services.AddScoped<IPhoneService, PhoneService>()
+                .AddScoped<IBrandService, SqlBrandService>()
+                .AddScoped<ITimeProvider, TimeProvider>()
+                .AddScoped(typeof(IRepository<>), typeof(EFRepository<>))
+                .AddScoped<ILogger, FileLogger>()
+                .AddSingleton<ICaching, MemoryCaching>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

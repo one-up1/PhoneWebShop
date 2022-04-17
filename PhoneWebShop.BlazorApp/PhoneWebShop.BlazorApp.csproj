@@ -12,9 +12,15 @@
     <PackageReference Include="Blazorise" Version="0.9.5.7" />
     <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.7" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.16">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PhoneWebShop.Business\PhoneWebShop.Business.csproj" />
     <ProjectReference Include="..\PhoneWebShop.Domain\PhoneWebShop.Domain.csproj" />
   </ItemGroup>
 
