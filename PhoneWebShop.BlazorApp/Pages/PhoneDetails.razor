@@ -1,0 +1,23 @@
+﻿@using PhoneWebShop.Domain.Entities;
+@using PhoneWebShop.Domain.Interfaces;
+
+@page "/phone/{Id:int}"
+
+<h3>PhoneDetails of @(phone == null ? "Loading" : phone.FullName)</h3>
+
+@code {
+    [Inject]
+    IPhoneService PhoneService { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    private Phone phone;
+
+    protected override async void OnInitialized()
+    {
+        base.OnInitialized();
+        phone = await PhoneService.GetAsync(Id);
+        StateHasChanged();
+    }
+}

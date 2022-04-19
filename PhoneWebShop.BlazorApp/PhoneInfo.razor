@@ -8,7 +8,8 @@
             <h4 class="phone-name">@Phone.FullName</h4>
             &euro;@Phone.VATPrice  @Phone.Stock left in stock!
         </div>
-        <Button class="phone-button" @onclick="ShowDescription">Show more</Button>
+        <Button class="phone-button" Type="ButtonType.Link" To="@("/phone/" + Phone.Id)">Show more</Button>
+        <!--<Button class="phone-button" @onclick="ShowDescription">Show more</Button>-->
     </ListGroupItem>
 </div>
 
@@ -16,11 +17,11 @@
     [Parameter]
     public Phone Phone { get; set; }
 
-    private void ShowDescription()
+    /*private void ShowDescription()
     {
         if (Phone.Description != null)
         {
             JsRuntime.InvokeVoidAsync("alert", Phone.Description);
         }
-    }
+    }*/
 }

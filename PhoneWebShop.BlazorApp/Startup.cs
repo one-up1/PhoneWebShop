@@ -35,12 +35,12 @@ namespace PhoneWebShop.BlazorApp
             services.AddServerSideBlazor();
             //services.AddSingleton<WeatherForecastService>();
 
-            services.AddDbContext<DataContext>(/*x =>
-                x.UseSqlServer(Configuration["AppSettings:ConnectionString"]), ServiceLifetime.Scoped*/);
-            services.Configure<AppSettings>(options =>
-            {
-                options.ConnectionString = Configuration["AppSettings:ConnectionString"];
-            });
+            services.AddOptions()
+                .Configure<AppSettings>(
+                    options => Configuration.GetSection(nameof(AppSettings).ToLower()).Bind(options));
+
+            services.AddDbContext<DataContext>(x =>
+                x.UseSqlServer(Configuration["AppSettings:ConnectionString"]), ServiceLifetime.Scoped);
 
             services.AddScoped<IPhoneService, PhoneService>()
                 .AddScoped<IBrandService, SqlBrandService>()
