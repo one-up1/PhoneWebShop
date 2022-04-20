@@ -1,0 +1,25 @@
+﻿.phone {
+    padding: 12px;
+    border: 1px solid black;
+}
+
+::deep .back-button {
+    position: absolute;
+    top: 80px;
+    right: 26px;
+    margin: 6px;
+    border: 1px solid black;
+}
+
+.phone-info {
+    display: inline-block;
+    margin-top: 12px;
+}
+
+.phone-description {
+    margin-top: 12px;
+}
+
+h3, h4 {
+    font-weight: bold;
+}

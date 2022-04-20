@@ -3,7 +3,37 @@
 
 @page "/phone/{Id:int}"
 
-<h3>PhoneDetails of @(phone == null ? "Loading" : phone.FullName)</h3>
+@if(phone == null)
+{
+    <h3>Loading</h3>
+}
+else
+{
+    <div>
+        <div class="phone">
+            <h3>@phone.FullName</h3>
+            <Button class="back-button" onclick="javascript:history.back()">Back</Button>
+
+            <img src="phone.png" />
+            <div class="phone-info">
+                <h4>&euro;@phone.VATPrice</h4>
+
+                @if (phone.Stock > 5)
+                {
+                    <p>phone.Stock in stock</p>
+                }
+                else
+                {
+                    <p>Almost out of stock! Only @phone.Stock left!</p>
+                }
+            </div>
+
+            <div class="phone-description">
+                @phone.Description
+            </div>
+        </div>
+    </div>
+}
 
 @code {
     [Inject]
@@ -18,6 +48,7 @@
     {
         base.OnInitialized();
         phone = await PhoneService.GetAsync(Id);
+        //System.Threading.Thread.Sleep(1000);
         StateHasChanged();
     }
 }
