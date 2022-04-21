@@ -1,14 +1,22 @@
 ﻿@using PhoneWebShop.Domain.Entities;
 @using PhoneWebShop.Domain.Interfaces;
+@using System.Net.Http.Json
 
 @page "/"
 
-<ListGroup>
-    @foreach (Phone phone in phones)
-    {
-        <PhoneInfo Phone="@phone" />
-    }
-</ListGroup>
+@if (phones == null)
+{
+    <h3>Loading</h3>
+}
+else
+{
+    <ListGroup>
+        @foreach (Phone phone in phones)
+        {
+            <PhoneInfo Phone="@phone" />
+        }
+    </ListGroup>
+}
 
 @code {
     [Inject]
@@ -16,11 +24,15 @@
 
     private IEnumerable<Phone> phones;
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         base.OnInitialized();
 
-        phones = PhoneService.GetAll().Result;
+        HttpClient client = new HttpClient();
+        phones = await client.GetFromJsonAsync<IEnumerable<Phone>>("https://localhost:44337/api/Phones/Search");
+        StateHasChanged();
+
+        //phones = PhoneService.GetAll().Result;
 
         /*Brand samsung = new()
         {
