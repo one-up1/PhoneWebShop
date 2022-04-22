@@ -1,5 +1,4 @@
 ﻿@using PhoneWebShop.Domain.Entities;
-@using System.Net.Http.Json
 
 @page "/phone/{Id:int}"
 
@@ -48,11 +47,10 @@ else
     {
         base.OnInitialized();
 
-        HttpClient client = new HttpClient();
-        phone = await client.GetFromJsonAsync<Phone>("https://localhost:44337/api/Phones/" + Id);
+        ApiClient client = new ApiClient();
+        phone = await client.GetPhone(Id);
         StateHasChanged();
 
         //phone = await PhoneService.GetAsync(Id);
-        StateHasChanged();
     }
 }

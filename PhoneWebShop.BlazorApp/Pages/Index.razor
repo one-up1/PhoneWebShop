@@ -1,5 +1,4 @@
 ﻿@using PhoneWebShop.Domain.Entities;
-@using System.Net.Http.Json
 
 @page "/"
 
@@ -27,8 +26,8 @@ else
     {
         base.OnInitialized();
 
-        HttpClient client = new HttpClient();
-        phones = await client.GetFromJsonAsync<IEnumerable<Phone>>("https://localhost:44337/api/Phones/Search");
+        ApiClient client = new ApiClient();
+        phones = await client.GetPhones();
         StateHasChanged();
 
         //phones = PhoneService.GetAll().Result;
