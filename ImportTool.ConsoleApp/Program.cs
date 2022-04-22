@@ -18,7 +18,7 @@ namespace ImportTool.ConsoleApp
     public class Program
     {
         private const string SqlConnectionString = "Data Source=localhost;Initial Catalog=phoneshop;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        private const string LoggerOutput = "C:\\Users\\thoma\\source\\repos\\phonelog.txt";
+        private const string LoggerOutput = "C:\\Users\\oneup\\source\\repos\\phonelog.txt";
         private readonly IPhoneImportService _importService;
         private readonly IPhoneService _phoneService;
 

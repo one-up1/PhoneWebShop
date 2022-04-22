@@ -2,7 +2,7 @@
   "profiles": {
     "ImportTool.ConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "\"C:\\Users\\thoma\\Downloads\\PhoneList001.xml\""
+      "commandLineArgs": "\"C:\\Users\\oneup\\Downloads\\PhoneList001.xml\""
     }
   }
 }
