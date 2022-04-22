@@ -1,5 +1,4 @@
 ﻿@using PhoneWebShop.Domain.Entities;
-@using PhoneWebShop.Domain.Interfaces;
 @using System.Net.Http.Json
 
 @page "/"
@@ -19,8 +18,8 @@ else
 }
 
 @code {
-    [Inject]
-    IPhoneService PhoneService { get; set; }
+    /*[Inject]
+    IPhoneService PhoneService { get; set; }*/
 
     private IEnumerable<Phone> phones;
 

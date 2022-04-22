@@ -1,5 +1,5 @@
 ﻿@using PhoneWebShop.Domain.Entities;
-@using PhoneWebShop.Domain.Interfaces;
+@using System.Net.Http.Json
 
 @page "/phone/{Id:int}"
 
@@ -36,8 +36,8 @@ else
 }
 
 @code {
-    [Inject]
-    IPhoneService PhoneService { get; set; }
+    /*[Inject]
+    IPhoneService PhoneService { get; set; }*/
 
     [Parameter]
     public int Id { get; set; }
@@ -47,8 +47,12 @@ else
     protected override async void OnInitialized()
     {
         base.OnInitialized();
-        phone = await PhoneService.GetAsync(Id);
-        //System.Threading.Thread.Sleep(1000);
+
+        HttpClient client = new HttpClient();
+        phone = await client.GetFromJsonAsync<Phone>("https://localhost:44337/api/Phones/" + Id);
+        StateHasChanged();
+
+        //phone = await PhoneService.GetAsync(Id);
         StateHasChanged();
     }
 }
