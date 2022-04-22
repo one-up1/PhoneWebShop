@@ -39,8 +39,8 @@ namespace PhoneWebShop.Api.Controllers
             return await _phoneService.AddAsync(phone) ? CreatedAtAction(nameof(Create), phone) : Conflict("Phone exists, cannot add!");
         }
 
-        [HttpPost]
-        [Route("Delete/{id}")]
+        [HttpPost("Delete/{id}")]
+        [Authorize]
         public async Task<IActionResult> DeletePhone(int id)
         {
             await _phoneService.DeleteAsync(id);

@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PhoneWebShop.Api\PhoneWebShop.Api.csproj" />
     <ProjectReference Include="..\PhoneWebShop.Domain\PhoneWebShop.Domain.csproj" />
   </ItemGroup>
 

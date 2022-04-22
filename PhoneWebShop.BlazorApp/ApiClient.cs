@@ -1,4 +1,6 @@
-﻿using PhoneWebShop.Domain.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using PhoneWebShop.Api.Models;
+using PhoneWebShop.Domain.Entities;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -25,6 +27,16 @@ namespace PhoneWebShop.BlazorApp
         public Task<Phone> GetPhone(int id)
         {
             return client.GetFromJsonAsync<Phone>(URL + "/Phones/" + id);
+        }
+
+        public Task<HttpResponseMessage> Register(RegisterUserInputModel userInfo)
+        {
+            return client.PostAsJsonAsync<RegisterUserInputModel>(URL + "/Users/Register", userInfo);
+        }
+
+        public Task<HttpResponseMessage> Login(LoginUserInputModel userInfo)
+        {
+            return client.PostAsJsonAsync<LoginUserInputModel>(URL + "/Users/Login", userInfo);
         }
     }
 }
