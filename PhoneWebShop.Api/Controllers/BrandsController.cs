@@ -43,7 +43,7 @@ namespace PhoneWebShop.Api.Controllers
         {
             var brand = await _brandService.GetByIdAsync(id);
             if (brand == null)
-                return NotFound(new { error = $"No phone found with id = {id}" });
+                return NotFound(new { error = $"No brand found with id = {id}" });
             return Ok(brand);
         }
     }

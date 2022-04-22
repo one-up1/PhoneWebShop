@@ -29,6 +29,11 @@ namespace PhoneWebShop.BlazorApp
             return client.GetFromJsonAsync<Phone>(URL + "/Phones/" + id);
         }
 
+        public Task<HttpResponseMessage> DeletePhone(int id)
+        {
+            return client.PostAsJsonAsync<int>(URL + "/Phones/Delete/" + id, id);
+        }
+
         public Task<HttpResponseMessage> Register(RegisterUserInputModel userInfo)
         {
             return client.PostAsJsonAsync<RegisterUserInputModel>(URL + "/Users/Register", userInfo);
