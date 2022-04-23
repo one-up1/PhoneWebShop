@@ -31,7 +31,7 @@ namespace PhoneWebShop.BlazorApp
 
         public Task<HttpResponseMessage> DeletePhone(int id)
         {
-            return client.PostAsJsonAsync<int>(URL + "/Phones/Delete/" + id, id);
+            return client.PostAsync(URL + "/Phones/Delete/" + id, null);
         }
 
         public Task<HttpResponseMessage> Register(RegisterUserInputModel userInfo)
