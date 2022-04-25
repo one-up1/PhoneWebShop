@@ -1,0 +1,26 @@
+﻿@using PhoneWebShop.Api.Models;
+
+@page "/register"
+
+<h3>Register</h3>
+<EditForm Model="@UserInfo" OnValidSubmit=@Submit>
+    <div class="form-group">
+        <label For="Email">Email</label>
+        <InputText @bind-Value=UserInfo.Email class="form-control" id="Email" />
+    </div>
+    <div class="form-group">
+        <label For="Password">Password</label>
+        <InputText type="password" @bind-Value=UserInfo.Password class="form-control" id="Password" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Register" />
+</EditForm>
+
+@code {
+    RegisterUserInputModel UserInfo = new RegisterUserInputModel();
+
+    async void Submit(EditContext context)
+    {
+        ApiClient client = new ApiClient();
+        HttpResponseMessage res = await client.Register(UserInfo);
+    }
+}

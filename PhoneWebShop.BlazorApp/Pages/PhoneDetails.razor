@@ -1,4 +1,6 @@
 ﻿@using PhoneWebShop.Domain.Entities;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
 
 @page "/phone/{Id:int}"
 
@@ -30,6 +32,10 @@ else
             <div class="phone-description">
                 @phone.Description
             </div>
+            @if (token != null)
+            {
+                <Button @onclick="Delete">Delete</Button>
+            }
         </div>
     </div>
 }
@@ -42,15 +48,26 @@ else
     public int Id { get; set; }
 
     private Phone phone;
+    private string token;
 
     protected override async void OnInitialized()
     {
         base.OnInitialized();
 
+        var result = await ProtectedSessionStore.GetAsync<string>("token");
+        if (result.Success)
+        {
+            token = result.Value;
+        }
+
         ApiClient client = new ApiClient();
         phone = await client.GetPhone(Id);
         StateHasChanged();
+    }
 
-        //phone = await PhoneService.GetAsync(Id);
+    async void Delete()
+    {
+        ApiClient client = new ApiClient();
+        HttpResponseMessage res = await client.DeletePhone(phone.Id, token);
     }
 }

@@ -1,0 +1,45 @@
+﻿@using PhoneWebShop.Api.Models;
+@using System.Text.Json;
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedSessionStorage ProtectedSessionStore
+
+@page "/login"
+
+<h3>Login</h3>
+<EditForm Model="@userInfo" OnValidSubmit=@Submit>
+    <div class="form-group">
+        <label For="Email">Email</label>
+        <InputText @bind-Value=userInfo.UserName class="form-control" id="Email" />
+    </div>
+    <div class="form-group">
+        <label For="Password">Password</label>
+        <InputText type="password" @bind-Value=userInfo.Password class="form-control" id="Password" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Login" />
+</EditForm>
+
+@code {
+    LoginUserInputModel userInfo = new LoginUserInputModel();
+
+    async void Submit(EditContext context)
+    {
+        ApiClient client = new ApiClient();
+        HttpResponseMessage res = await client.Login(userInfo);
+
+        LoginResponse lres = JsonSerializer.Deserialize<LoginResponse>(
+            await res.Content.ReadAsStringAsync(),
+            new JsonSerializerOptions(JsonSerializerDefaults.Web));
+
+        /*await res.Content.ReadAsStreamAsync(),
+            new JsonSerializerOptions(JsonSerializerDefaults.Web));*/
+
+        await ProtectedSessionStore.SetAsync("token", lres.Token);
+    }
+
+    class LoginResponse
+    {
+        public bool Success { get; set; }
+
+        public string Token { get; set; }
+    }
+}

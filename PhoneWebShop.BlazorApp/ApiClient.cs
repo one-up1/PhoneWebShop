@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using PhoneWebShop.Api.Models;
+﻿using PhoneWebShop.Api.Models;
 using PhoneWebShop.Domain.Entities;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -29,19 +28,22 @@ namespace PhoneWebShop.BlazorApp
             return client.GetFromJsonAsync<Phone>(URL + "/Phones/" + id);
         }
 
-        public Task<HttpResponseMessage> DeletePhone(int id)
+        public Task<HttpResponseMessage> DeletePhone(int id, string token)
         {
-            return client.PostAsync(URL + "/Phones/Delete/" + id, null);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post,
+                URL + "/Phones/Delete/" + id);
+            request.Headers.Add("Authorization", "Bearer " + token);
+            return client.SendAsync(request);
         }
 
         public Task<HttpResponseMessage> Register(RegisterUserInputModel userInfo)
         {
-            return client.PostAsJsonAsync<RegisterUserInputModel>(URL + "/Users/Register", userInfo);
+            return client.PostAsJsonAsync(URL + "/User/Register", userInfo);
         }
 
         public Task<HttpResponseMessage> Login(LoginUserInputModel userInfo)
         {
-            return client.PostAsJsonAsync<LoginUserInputModel>(URL + "/Users/Login", userInfo);
+            return client.PostAsJsonAsync(URL + "/User/Login", userInfo);
         }
     }
 }
