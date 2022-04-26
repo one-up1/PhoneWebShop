@@ -13,7 +13,7 @@ else
     <div>
         <div class="phone">
             <h3>@phone.FullName</h3>
-            <Button class="back-button" onclick="javascript:history.back()">Back</Button>
+            <Button Color="Color.Primary" Type="ButtonType.Link" To="/" class="back-button">Back</Button>
 
             <img src="phone.png" />
             <div class="phone-info">
@@ -32,9 +32,10 @@ else
             <div class="phone-description">
                 @phone.Description
             </div>
+
             @if (token != null)
             {
-                <Button @onclick="Delete">Delete</Button>
+                <Button Color="Color.Primary" Clicked="Delete">Delete</Button>
             }
         </div>
     </div>
@@ -46,6 +47,9 @@ else
 
     [Inject]
     ApiClient ApiClient { get; set; }
+
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
 
     [Parameter]
     public int Id { get; set; }
@@ -70,5 +74,9 @@ else
     async void Delete()
     {
         HttpResponseMessage res = await ApiClient.DeletePhone(phone.Id, token);
+        if (res.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/");
+        }
     }
 }

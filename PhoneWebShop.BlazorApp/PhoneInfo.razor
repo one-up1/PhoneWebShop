@@ -8,7 +8,7 @@
             <h4 class="phone-name">@Phone.FullName</h4>
             &euro;@Phone.VATPrice  @Phone.Stock left in stock!
         </div>
-        <Button class="phone-button" Type="ButtonType.Link" To="@("/phone/" + Phone.Id)">Show more</Button>
+        <Button Color="Color.Primary" Type="ButtonType.Link" To="@("/phone/" + Phone.Id)" class="phone-button">Show more</Button>
         <!--<Button class="phone-button" @onclick="ShowDescription">Show more</Button>-->
     </ListGroupItem>
 </div>
