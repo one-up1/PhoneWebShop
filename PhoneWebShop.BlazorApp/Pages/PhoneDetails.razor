@@ -44,6 +44,9 @@ else
     /*[Inject]
     IPhoneService PhoneService { get; set; }*/
 
+    [Inject]
+    ApiClient ApiClient { get; set; }
+
     [Parameter]
     public int Id { get; set; }
 
@@ -60,14 +63,12 @@ else
             token = result.Value;
         }
 
-        ApiClient client = new ApiClient();
-        phone = await client.GetPhone(Id);
+        phone = await ApiClient.GetPhone(Id);
         StateHasChanged();
     }
 
     async void Delete()
     {
-        ApiClient client = new ApiClient();
-        HttpResponseMessage res = await client.DeletePhone(phone.Id, token);
+        HttpResponseMessage res = await ApiClient.DeletePhone(phone.Id, token);
     }
 }

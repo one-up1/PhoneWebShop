@@ -19,13 +19,14 @@
 </EditForm>
 
 @code {
+    [Inject]
+    ApiClient ApiClient { get; set; }
+
     LoginUserInputModel userInfo = new LoginUserInputModel();
 
     async void Submit(EditContext context)
     {
-        ApiClient client = new ApiClient();
-        HttpResponseMessage res = await client.Login(userInfo);
-
+        HttpResponseMessage res = await ApiClient.Login(userInfo);
         LoginResponse lres = JsonSerializer.Deserialize<LoginResponse>(
             await res.Content.ReadAsStringAsync(),
             new JsonSerializerOptions(JsonSerializerDefaults.Web));

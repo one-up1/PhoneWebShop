@@ -16,11 +16,13 @@
 </EditForm>
 
 @code {
+    [Inject]
+    ApiClient ApiClient { get; set; }
+
     RegisterUserInputModel UserInfo = new RegisterUserInputModel();
 
     async void Submit(EditContext context)
     {
-        ApiClient client = new ApiClient();
-        HttpResponseMessage res = await client.Register(UserInfo);
+        HttpResponseMessage res = await ApiClient.Register(UserInfo);
     }
 }

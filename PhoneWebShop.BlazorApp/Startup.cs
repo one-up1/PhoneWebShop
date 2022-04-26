@@ -37,6 +37,8 @@ namespace PhoneWebShop.BlazorApp
                 .AddScoped(typeof(IRepository<>), typeof(EFRepository<>))
                 .AddScoped<ILogger, FileLogger>()
                 .AddSingleton<ICaching, MemoryCaching>();*/
+
+            services.AddSingleton<ApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

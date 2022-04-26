@@ -20,14 +20,16 @@ else
     /*[Inject]
     IPhoneService PhoneService { get; set; }*/
 
+    [Inject]
+    ApiClient ApiClient { get; set; }
+
     private IEnumerable<Phone> phones;
 
     protected override async void OnInitialized()
     {
         base.OnInitialized();
 
-        ApiClient client = new ApiClient();
-        phones = await client.GetPhones();
+        phones = await ApiClient.GetPhones();
         StateHasChanged();
 
         //phones = PhoneService.GetAll().Result;
