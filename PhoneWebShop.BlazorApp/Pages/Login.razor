@@ -6,35 +6,72 @@
 @page "/login"
 
 <h3>Login</h3>
-<EditForm Model="@userInfo" OnValidSubmit=@Submit>
-    <div class="form-group">
-        <label For="Email">Email</label>
-        <InputText @bind-Value=userInfo.UserName class="form-control" id="Email" />
-    </div>
-    <div class="form-group">
-        <label For="Password">Password</label>
-        <InputText type="password" @bind-Value=userInfo.Password class="form-control" id="Password" />
-    </div>
-    <input type="submit" class="btn btn-primary" value="Login" />
-</EditForm>
+<Validations @ref="validations" Mode="ValidationMode.Auto" Model="@userInfo">
+    <Validation Validator="@ValidationRule.IsEmail">
+        <div class="form-group">
+            <label For="Email">Email</label>
+            <TextEdit @bind-Text="userInfo.UserName" class="form-control" id="Email">
+                <Feedback>
+                    <ValidationError>Please enter a valid email address</ValidationError>
+                </Feedback>
+            </TextEdit>
+        </div>    
+    </Validation>
+    
+    <Validation Validator="@ValidationRule.IsNotEmpty">
+        <div class="form-group">
+            <label For="Password">Password</label>
+            <TextEdit @bind-Text="userInfo.Password" type="password" class="form-control" id="Password">
+                <Feedback>
+                    <ValidationError>Please enter your password</ValidationError>
+                </Feedback>
+            </TextEdit>
+        </div>
+    </Validation>
+
+    <Button Color="Color.Primary" Clicked="Submit">Login</Button>
+    @if (loginError != null)
+    {
+        <br /><br />
+        <h4 class="alert-warning">@loginError</h4>
+    }
+</Validations>
 
 @code {
     [Inject]
     ApiClient ApiClient { get; set; }
 
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
+
     LoginUserInputModel userInfo = new LoginUserInputModel();
+    Validations validations;
+    string loginError;
 
-    async void Submit(EditContext context)
+    async void Submit()
     {
-        HttpResponseMessage res = await ApiClient.Login(userInfo);
-        LoginResponse lres = JsonSerializer.Deserialize<LoginResponse>(
-            await res.Content.ReadAsStringAsync(),
-            new JsonSerializerOptions(JsonSerializerDefaults.Web));
+        loginError = null;
+        if (await validations.ValidateAll())
+        {
+            HttpResponseMessage httpRes = await ApiClient.Login(userInfo);
+            string content = await httpRes.Content.ReadAsStringAsync();
 
-        /*await res.Content.ReadAsStreamAsync(),
-            new JsonSerializerOptions(JsonSerializerDefaults.Web));*/
-
-        await ProtectedSessionStore.SetAsync("token", lres.Token);
+            if (httpRes.IsSuccessStatusCode)
+            {
+                LoginResponse loginRes = JsonSerializer.Deserialize<LoginResponse>(
+                    content, new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                if (loginRes.Success)
+                {
+                    await ProtectedSessionStore.SetAsync("token", loginRes.Token);
+                    NavigationManager.NavigateTo("/");
+                }
+            }
+            else
+            {
+                loginError = content;
+            }
+        }
+        StateHasChanged();
     }
 
     class LoginResponse
