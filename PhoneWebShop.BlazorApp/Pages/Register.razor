@@ -1,28 +1,80 @@
 ﻿@using PhoneWebShop.Api.Models;
+@using System.Text.Json;
 
 @page "/register"
 
 <h3>Register</h3>
-<EditForm Model="@UserInfo" OnValidSubmit=@Submit>
-    <div class="form-group">
-        <label For="Email">Email</label>
-        <InputText @bind-Value=UserInfo.Email class="form-control" id="Email" />
-    </div>
-    <div class="form-group">
-        <label For="Password">Password</label>
-        <InputText type="password" @bind-Value=UserInfo.Password class="form-control" id="Password" />
-    </div>
-    <input type="submit" class="btn btn-primary" value="Register" />
-</EditForm>
+<Validations @ref="validations" Mode="ValidationMode.Auto" Model="@userInfo">
+    <Validation Validator="@ValidationRule.IsEmail">
+        <div class="form-group">
+            <label For="Email">Email</label>
+            <TextEdit @bind-Text="userInfo.Email" class="form-control" id="Email">
+                <Feedback>
+                    <ValidationError>Please enter a valid email address</ValidationError>
+                </Feedback>
+            </TextEdit>
+        </div>
+    </Validation>
+    
+    <Validation Validator="@ValidationRule.IsNotEmpty">
+        <div class="form-group">
+            <label For="Password">Password</label>
+            <TextEdit @bind-Text="userInfo.Password" type="password" class="form-control" id="Password">
+                <Feedback>
+                    <ValidationError>Please enter your password</ValidationError>
+                </Feedback>
+            </TextEdit>
+        </div>
+    </Validation>
+
+    <Button Color="Color.Primary" Clicked="Submit">Register</Button>
+    @if (errors != null)
+    {
+        <br />
+        @foreach (RegisterError error in errors)
+        {
+            <br />
+            <h4 class="alert-warning">@error.Description</h4>
+        }
+    }
+</Validations>
 
 @code {
     [Inject]
     ApiClient ApiClient { get; set; }
 
-    RegisterUserInputModel UserInfo = new RegisterUserInputModel();
+    [Inject]
+    NavigationManager NavigationManager { get; set; }
 
-    async void Submit(EditContext context)
+    RegisterUserInputModel userInfo = new RegisterUserInputModel();
+    Validations validations;
+    RegisterError[] errors;
+
+    async void Submit()
     {
-        HttpResponseMessage res = await ApiClient.Register(UserInfo);
+        errors = null;
+        if (await validations.ValidateAll())
+        {
+            HttpResponseMessage httpRes = await ApiClient.Register(userInfo);
+            string content = await httpRes.Content.ReadAsStringAsync();
+
+            if (httpRes.IsSuccessStatusCode)
+            {
+                NavigationManager.NavigateTo("/");
+            }
+            else
+            {
+                errors = JsonSerializer.Deserialize<RegisterError[]>(content,
+                    new JsonSerializerOptions(JsonSerializerDefaults.Web));
+            }
+        }
+        StateHasChanged();
+    }
+
+    class RegisterError
+    {
+        public string Code { get; set; }
+
+        public string Description { get; set; }
     }
 }
