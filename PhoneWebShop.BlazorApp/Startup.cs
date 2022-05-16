@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PhoneWebShop.Domain.Models.Configuration;
+using ApiClient;
 
 namespace PhoneWebShop.BlazorApp
 {
@@ -37,8 +38,8 @@ namespace PhoneWebShop.BlazorApp
                 .AddScoped(typeof(IRepository<>), typeof(EFRepository<>))
                 .AddScoped<ILogger, FileLogger>()
                 .AddSingleton<ICaching, MemoryCaching>();*/
-
-            services.AddSingleton<ApiClient>();
+            
+            services.AddPhoneShopApiClient("https://localhost:44337/api/");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ApiClient" Version="1.0.1" />
     <PackageReference Include="Blazorise" Version="0.9.5.7" />
     <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.7" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.7" />
@@ -24,6 +25,5 @@
     <ProjectReference Include="..\PhoneWebShop.Api\PhoneWebShop.Api.csproj" />
     <ProjectReference Include="..\PhoneWebShop.Domain\PhoneWebShop.Domain.csproj" />
   </ItemGroup>
-
 	
 </Project>
